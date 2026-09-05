@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>YouTube Old Video Filter</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    font: 14px/1.5 system-ui, sans-serif;
+    margin: 0;
+    padding: 16px;
+    min-width: 300px;
+  }
+  h1 { font-size: 15px; margin: 0 0 12px; }
+  .row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  input[type="number"] { width: 70px; padding: 4px; }
+  select { padding: 4px; }
+  #status { color: #2e7d32; min-height: 1.2em; font-size: 12px; }
+  p.hint { color: #777; font-size: 12px; margin: 0 0 12px; }
+</style>
+</head>
+<body>
+  <h1>Hide old videos on the YouTube home page</h1>
+
+  <div class="row">
+    <input type="checkbox" id="enabled">
+    <label for="enabled">Filter is on</label>
+  </div>
+
+  <div class="row">
+    <label for="amount">Hide videos older than</label>
+    <input type="number" id="amount" min="1" step="1" value="4">
+    <select id="unit">
+      <option value="days">days</option>
+      <option value="weeks">weeks</option>
+      <option value="months">months</option>
+      <option value="years">years</option>
+    </select>
+  </div>
+
+  <p class="hint">Only the home / "For you" feed is filtered. Live streams stay.</p>
+  <div id="status"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>
