@@ -1,7 +1,7 @@
 {
   "name": "youtube-old-filter-plugin",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Hides videos on the YouTube home feed that are older than a date you choose.",
   "license": "MIT",
   "scripts": {
