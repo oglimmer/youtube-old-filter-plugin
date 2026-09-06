@@ -5,7 +5,7 @@
   "description": "Hides videos on the YouTube home feed that are older than a date you choose.",
   "license": "MIT",
   "scripts": {
-    "lint": "web-ext lint --source-dir .",
+    "lint": "web-ext lint --source-dir . --self-hosted",
     "start": "web-ext run --source-dir .",
     "build": "web-ext build --source-dir . --artifacts-dir web-ext-artifacts --overwrite-dest",
     "sign": "web-ext sign --source-dir . --artifacts-dir web-ext-artifacts --channel unlisted"
@@ -24,7 +24,8 @@
       ".amo-upload-uuid",
       "README.md",
       "build.sh",
-      "icons/icon.svg"
+      "icons/icon.svg",
+      "updates.json"
     ]
   }
 }

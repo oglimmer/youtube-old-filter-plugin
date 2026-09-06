@@ -25,6 +25,9 @@ Default: **hide anything older than 4 weeks.**
 
 The file is signed by Mozilla, so Firefox keeps it after a restart.
 
+Firefox checks for new versions on its own, about once a day. It reads
+`updates.json` in this repo and installs any newer release for you.
+
 ### From your own signed file
 
 1. Run `npm run sign` (see [Build and sign](#build-and-sign)).
@@ -75,6 +78,16 @@ Firefox only installs signed add-ons. An unsigned `.zip` works with
 `about:debugging` or Firefox Developer Edition with
 `xpinstall.signatures.required` set to `false` in `about:config`.
 
+### Shipping a new version
+
+1. Raise `version` in `manifest.json`. Mozilla refuses the same version twice.
+2. `npm run sign`
+3. Create a GitHub release tagged `vX.Y.Z` and attach the `.xpi` as
+   `youtube-old-filter.xpi`.
+4. Point `updates.json` at the new version and tag, then push to `main`.
+
+Step 4 is what makes existing users get the update.
+
 ## Files
 
 | File | Purpose |
@@ -85,6 +98,7 @@ Firefox only installs signed add-ons. An unsigned `.zip` works with
 | `icons/icon-48.png`, `icons/icon-96.png` | Toolbar and add-on icon |
 | `icons/icon.svg` | Source the PNG icons are rendered from |
 | `package.json` | `web-ext` scripts for lint, run, build and sign |
+| `updates.json` | Tells Firefox where the newest signed `.xpi` lives |
 
 ## Languages
 

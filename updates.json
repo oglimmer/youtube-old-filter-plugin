@@ -1,0 +1,17 @@
+{
+  "addons": {
+    "youtube-old-filter@oglimmer.com": {
+      "updates": [
+        {
+          "version": "1.0.1",
+          "update_link": "https://github.com/oglimmer/youtube-old-filter-plugin/releases/download/v1.0.1/youtube-old-filter.xpi",
+          "applications": {
+            "gecko": {
+              "strict_min_version": "115.0"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
