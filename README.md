@@ -15,13 +15,31 @@ Default: **hide anything older than 4 weeks.**
 - Never hides live streams (they have no age).
 - Keeps working while you scroll, because the feed loads more cards as you go.
 
-## Install for testing (temporary)
+## Install
+
+### From GitHub (easiest)
+
+1. Go to the [latest release](https://github.com/oglimmer/youtube-old-filter-plugin/releases/latest).
+2. Download `youtube-old-filter.xpi`.
+3. Drag the file onto a Firefox window, then click **Add**.
+
+The file is signed by Mozilla, so Firefox keeps it after a restart.
+
+### From your own signed file
+
+1. Run `npm run sign` (see [Build and sign](#build-and-sign)).
+2. Open the `.xpi` in `web-ext-artifacts/` with Firefox.
+
+### For testing (temporary)
 
 1. Open `about:debugging#/runtime/this-firefox`
 2. Click **Load Temporary Add-on...**
 3. Pick `manifest.json` in this folder
 
 Firefox removes a temporary add-on when it restarts.
+
+Or run `npm run start`. This opens a fresh Firefox with the add-on loaded and
+reloads it when you edit a file.
 
 ## Settings
 
@@ -34,17 +52,28 @@ Click the toolbar icon, or open `about:addons` -> the add-on -> Preferences.
 
 Settings are stored in `storage.sync`, so they follow your Firefox account.
 
-## Build a package
+## Build and sign
+
+You need Node.js.
 
 ```sh
-./build.sh
+npm install
+npm run lint     # check the add-on for errors
+npm run build    # makes web-ext-artifacts/*.zip (unsigned)
+npm run sign     # makes web-ext-artifacts/*.xpi (signed, self-hosted)
 ```
 
-This creates `dist/youtube-old-filter.xpi`.
+`npm run sign` needs Mozilla API keys. Get them at
+[addons.mozilla.org/developers/addon/api/key/](https://addons.mozilla.org/en-US/developers/addon/api/key/)
+and pass them like this:
 
-To install that file permanently you must sign it at
-[addons.mozilla.org](https://addons.mozilla.org), or use Firefox Developer
-Edition with `xpinstall.signatures.required` set to `false` in `about:config`.
+```sh
+npm run sign -- --api-key=user:12345:67 --api-secret=abcdef...
+```
+
+Firefox only installs signed add-ons. An unsigned `.zip` works with
+`about:debugging` or Firefox Developer Edition with
+`xpinstall.signatures.required` set to `false` in `about:config`.
 
 ## Files
 
@@ -53,8 +82,9 @@ Edition with `xpinstall.signatures.required` set to `false` in `about:config`.
 | `manifest.json` | Manifest V3 add-on definition |
 | `content.js` | Reads card ages and hides the old ones |
 | `options.html` / `options.js` | Settings page, also used as the toolbar popup |
-| `icons/icon.svg` | Toolbar and add-on icon |
-| `build.sh` | Zips the add-on into `dist/` |
+| `icons/icon-48.png`, `icons/icon-96.png` | Toolbar and add-on icon |
+| `icons/icon.svg` | Source the PNG icons are rendered from |
+| `package.json` | `web-ext` scripts for lint, run, build and sign |
 
 ## Languages
 

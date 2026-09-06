@@ -1,0 +1,30 @@
+{
+  "name": "youtube-old-filter-plugin",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Hides videos on the YouTube home feed that are older than a date you choose.",
+  "license": "MIT",
+  "scripts": {
+    "lint": "web-ext lint --source-dir .",
+    "start": "web-ext run --source-dir .",
+    "build": "web-ext build --source-dir . --artifacts-dir web-ext-artifacts --overwrite-dest",
+    "sign": "web-ext sign --source-dir . --artifacts-dir web-ext-artifacts --channel unlisted"
+  },
+  "devDependencies": {
+    "web-ext": "^8.4.0"
+  },
+  "webExt": {
+    "ignoreFiles": [
+      "package.json",
+      "package-lock.json",
+      "node_modules",
+      "web-ext-artifacts",
+      "dist",
+      ".gitignore",
+      ".amo-upload-uuid",
+      "README.md",
+      "build.sh",
+      "icons/icon.svg"
+    ]
+  }
+}
