@@ -13,6 +13,7 @@ Default: **hide anything older than 4 weeks.**
 - Hides the whole card with `display: none`, so the grid closes up. No gaps.
 - Only touches the home feed. Search, subscriptions and channel pages stay as they are.
 - Never hides live streams (they have no age).
+- Always hides "Members only" videos.
 - Keeps working while you scroll, because the feed loads more cards as you go.
 
 ## Install

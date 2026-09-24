@@ -21,14 +21,29 @@
 
   /* ---------- relative-date parsing ---------- */
 
+  // Short forms YouTube uses in compact cards ("3h ago", "2mo ago").
+  // Case-sensitive on purpose: view counts use upper case ("1.2M", "35K").
+  const SHORT_UNIT_DAYS = {
+    s: 1 / 86400,
+    m: 1 / 1440,
+    h: 1 / 24,
+    d: 1,
+    w: 7,
+    mo: 30,
+    y: 365,
+    yr: 365,
+  };
+
   // Maps the first letters of a time word (many languages) to a number of days.
   function unitToDays(rawWord) {
+    if (Object.hasOwn(SHORT_UNIT_DAYS, rawWord)) return SHORT_UNIT_DAYS[rawWord];
+
     const w = rawWord.toLowerCase();
     const is = (...prefixes) => prefixes.some((p) => w.startsWith(p));
 
     if (is("sec", "sek", "seg", "sik")) return 1 / 86400;
     if (is("min")) return 1 / 1440;
-    if (is("hour", "hora", "heure", "stund", "uur", "ora", "ore", "timme", "time")) return 1 / 24;
+    if (is("hour", "hora", "heure", "stund", "std", "uur", "ora", "ore", "timme", "time")) return 1 / 24;
     if (is("day", "tag", "jour", "dia", "día", "giorn", "dag", "dzie")) return 1;
     if (is("week", "woch", "semain", "seman", "settiman", "uge", "vecka", "tydz")) return 7;
     if (is("month", "monat", "mois", "mes", "mês", "maand", "mesi", "maned", "månad", "miesi")) return 30;
@@ -78,6 +93,18 @@
     ".badge-shape-wiz--thumbnail-live",
   ].join(",");
 
+  // "Members only" badge -> always hide.
+  const MEMBERS_SELECTOR = [
+    ".ytBadgeShapeCommerce",
+    ".yt-badge-shape--commerce",
+    ".badge-shape-wiz--commerce",
+    ".badge-style-type-members-only",
+  ].join(",");
+
+  function isMembersOnly(item) {
+    return item.querySelector(MEMBERS_SELECTOR) !== null;
+  }
+
   function itemAgeDays(item) {
     if (item.querySelector(LIVE_SELECTOR)) return null;
 
@@ -107,6 +134,10 @@
     for (const item of items) {
       if (!active) {
         item.classList.remove("yof-hidden");
+        continue;
+      }
+      if (isMembersOnly(item)) {
+        item.classList.add("yof-hidden");
         continue;
       }
       const age = itemAgeDays(item);
