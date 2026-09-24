@@ -3,3 +3,4 @@ web-ext-artifacts/
 dist/
 .DS_Store
 .amo-upload-uuid
+.env
