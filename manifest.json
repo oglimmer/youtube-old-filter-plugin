@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Old Video Filter",
+  "name": "oglimmers-youtube-fixer",
   "version": "1.0.3",
   "description": "Hides videos on the YouTube home feed that are older than a date you choose. Default: 4 weeks.",
   "browser_specific_settings": {
@@ -40,7 +40,7 @@
     "open_in_tab": false
   },
   "action": {
-    "default_title": "YouTube Old Video Filter",
+    "default_title": "oglimmers-youtube-fixer",
     "default_popup": "options.html",
     "default_icon": {
       "48": "icons/icon-48.png",

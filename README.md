@@ -1,4 +1,4 @@
-# YouTube Old Video Filter
+# oglimmers-youtube-fixer
 
 A small Firefox add-on with one job: on the YouTube home ("For you") feed, hide
 every video suggestion that is older than a date you choose.

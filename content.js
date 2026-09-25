@@ -1,5 +1,5 @@
 /*
- * YouTube Old Video Filter
+ * oglimmers-youtube-fixer
  * Hides home-feed ("For you") video cards older than a configured age.
  */
 (() => {
