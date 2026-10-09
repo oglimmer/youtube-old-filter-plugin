@@ -101,8 +101,31 @@
     ".badge-style-type-members-only",
   ].join(",");
 
+  // Badge text fallback, for when YouTube changes the badge classes
+  // ("Members only", "Members first", "Nur für Mitglieder", ...).
+  const BADGE_SELECTOR = "badge-shape, .badge-shape-wiz, [class*='badge-shape'], .badge";
+  const MEMBERS_TEXT = /member|mitglied|miembro|membre|membri|membro|leden|medlem|członk/i;
+
   function isMembersOnly(item) {
-    return item.querySelector(MEMBERS_SELECTOR) !== null;
+    if (item.querySelector(MEMBERS_SELECTOR) !== null) return true;
+    for (const badge of item.querySelectorAll(BADGE_SELECTOR)) {
+      if (MEMBERS_TEXT.test(badge.textContent + " " + (badge.getAttribute("aria-label") || ""))) return true;
+    }
+    return false;
+  }
+
+  // Shelves in the feed ("Get more from memberships", ...).
+  const SECTION_SELECTOR = [
+    "ytd-rich-section-renderer",
+    "ytm-rich-section-renderer",
+  ].join(",");
+
+  // A shelf that holds members-only videos is a membership ad -> hide it whole.
+  function isMembersShelf(section) {
+    for (const item of section.querySelectorAll(ITEM_SELECTOR)) {
+      if (isMembersOnly(item)) return true;
+    }
+    return false;
   }
 
   function itemAgeDays(item) {
@@ -143,6 +166,10 @@
       const age = itemAgeDays(item);
       const hide = age !== null && age > maxAgeDays;
       item.classList.toggle("yof-hidden", hide);
+    }
+
+    for (const section of document.querySelectorAll(SECTION_SELECTOR)) {
+      section.classList.toggle("yof-hidden", active && isMembersShelf(section));
     }
   }
 
